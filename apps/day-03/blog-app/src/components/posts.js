@@ -1,29 +1,17 @@
 import React, {Component} from 'react';
+import { connect } from 'react-redux';
 
 import PostItem from './post-item';
 import AppAlert from './app-alert';
-import { getPosts } from '../api/blog-api';
+import { getPosts } from '../redux/actions';
 
 class Posts extends Component {
-  constructor(props) {
-    super(props);
-
-    console.log(props);
-
-    this.state = {
-      posts: []
-    };
-  }
-
   componentDidMount() {
-    getPosts().then((posts) => {
-      this.setState({ posts });
-    })
+    this.props.dispatchPosts();
   }
 
   render() {
-    const { posts } = this.state;
-    const { category } = this.props;
+    const { category, posts } = this.props;
     const filteredPosts = category === 'all' 
             ? [...posts] 
             : posts.filter(p => p.category === category);
@@ -41,4 +29,12 @@ class Posts extends Component {
   }
 }
 
-export default Posts;
+const mapStateToProps = ({ posts }) => ({
+  posts
+});
+
+const mapDispatchToProps = (dispatch) => ({
+  dispatchPosts: () => dispatch(getPosts())
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(Posts);

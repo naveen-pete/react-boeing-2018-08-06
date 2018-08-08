@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
-import { getCategories, addPost } from '../api/blog-api';
+import {connect} from 'react-redux';
+import { getCategories, addPost } from '../redux/actions';
 
 class PostForm extends Component {
   constructor(props) {
@@ -9,8 +10,7 @@ class PostForm extends Component {
       title: '',
       body: '',
       author: '',
-      category: '',
-      categories: []
+      category: ''
     }
 
     this.handleChange = this.handleChange.bind(this);
@@ -18,10 +18,7 @@ class PostForm extends Component {
   }
 
   componentDidMount() {
-    getCategories()
-      .then((categories) => {
-        this.setState({ categories });
-      });
+    this.props.getCategories();
   }
 
   handleChange(e) {
@@ -36,11 +33,10 @@ class PostForm extends Component {
     e.preventDefault();
 
     const post = { ...this.state };
-    delete post.categories;
 
     console.log(post);
 
-    addPost(post)
+    this.props.addPost(post)
       .then(() => {
         this.props.history.push('/posts?save=success');
       }).catch(() => {
@@ -85,7 +81,7 @@ class PostForm extends Component {
                     onChange={this.handleChange}
                   >
                   <option value=""></option>
-                  {this.state.categories.map(c => <option key={c.code} value={c.code}>{c.name}</option>)}
+                  {this.props.categories.map(c => <option key={c.code} value={c.code}>{c.name}</option>)}
                   </select>
                 </div>
   
@@ -99,4 +95,13 @@ class PostForm extends Component {
   }
 }
 
-export default PostForm;
+const mapStateToProps = ({ categories }) => ({
+  categories
+});
+
+const mapDispatchToProps = (dispatch) => ({
+  addPost: (post) => dispatch(addPost(post)),
+  getCategories: () => dispatch(getCategories())
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(PostForm);

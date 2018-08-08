@@ -15,19 +15,21 @@ export const getCategories = () => {
 };
 
 export const getPosts = () => {
-  // call to the get posts
-
-  return {
-    type: GET_POSTS,
-    payload: []
-  }
+  return (dispatch) => {
+    return BlogApi.getPosts()
+      .then(payload => dispatch({ 
+        type: GET_POSTS, 
+        payload
+      }));
+  };
 };
 
-export const addPosts = (post) => {
-  // call to add post
-
-  return {
-    type: ADD_POST,
-    payload: post
-  }
+export const addPost = (post) => {
+  return (dispatch) => {
+    return BlogApi.addPost(post)
+      .then(payload => dispatch({ 
+        type: ADD_POST, 
+        payload
+      }));
+  };
 };
