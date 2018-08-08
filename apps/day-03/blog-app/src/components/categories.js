@@ -1,26 +1,18 @@
 import React, { Component } from 'react';
-import * as BlogApi from '../api/blog-api';
+import { connect } from 'react-redux';
+import { getCategories } from '../redux/actions';
 
 class Categories extends Component {
-  // state = {
-  //   categories: []
-  // }
-
   constructor(props) {
     super(props);
 
     this.state = {
-      categories: [],
       selectedCategory: 'all'
     };
   }
 
   componentDidMount() {
-    BlogApi.getCategories()
-      .then((categories) => {
-        categories = [ { code: 'all', name: 'All'}, ...categories ];
-        this.setState({ categories });
-      });
+    this.props.dispatchCategories();
   }
 
   handleClick(selectedCategory) {
@@ -33,7 +25,7 @@ class Categories extends Component {
   }
 
   render() {
-    const items = this.state.categories.map(c => {
+    const items = this.props.categories.map(c => {
       return (
         <li onClick={() => this.handleClick(c.code)} 
           className={`list-group-item list-group-item-action ${this.addActive(c.code)}`}
@@ -54,4 +46,12 @@ class Categories extends Component {
   }
 }
 
-export default Categories;
+const mapStateToProps = ({ categories }) => ({
+  categories
+});
+
+const mapDispatchToProps = dispatch => ({
+  dispatchCategories: () => dispatch(getCategories())
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(Categories);

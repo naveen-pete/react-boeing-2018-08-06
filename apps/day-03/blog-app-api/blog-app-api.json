@@ -66,6 +66,10 @@
     {
       "name": "ES6",
       "code": "es6"
+    },
+    {
+      "name": "Java",
+      "code": "java"
     }
   ]
 }

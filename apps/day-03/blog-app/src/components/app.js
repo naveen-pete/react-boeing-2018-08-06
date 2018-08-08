@@ -47,8 +47,3 @@ class App extends Component {
 }
 
 export default App;
-
-// http://localhost:3000/  - Home
-// http://localhost:3000/posts  - Posts & Categories
-// http://localhost:3000/posts/new - Post 
-{/*  */}
