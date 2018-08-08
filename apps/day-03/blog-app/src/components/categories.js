@@ -44,9 +44,12 @@ class Categories extends Component {
     });
 
     return (
-      <ul className="list-group">
-        {items}
-      </ul>
+      <div className="col-md-4">
+        <h3>Categories</h3>
+        <ul className="list-group">
+          {items}
+        </ul>
+      </div>
     );
   }
 }

@@ -11,6 +11,10 @@ const PostItem = ({ post }) => {
         <p className="card-text">Author: <em>{post.author}</em></p>
         <p className="card-text">Category: <em>{post.category}</em></p>
       </div>
+      <div className="card-footer">
+        <button className="btn btn-sm btn-outline-primary mr-1" type="button">Edit</button>
+        <button className="btn btn-sm btn-outline-danger" type="button">Delete</button>
+      </div>
     </div>
   );
 };

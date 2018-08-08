@@ -29,7 +29,13 @@ class Posts extends Component {
         ? filteredPosts.map(p => <PostItem key={p.id} post={p} />)
         : <AppAlert message='No posts for the selected category!' type='error'  />
 
-    return result;
+    return (
+      <div className="col-md-8">
+        <h3 className="mr-3">Posts</h3>
+        <h5>(Category: {category})</h5>
+        {result}
+      </div>
+    );
   }
 }
 

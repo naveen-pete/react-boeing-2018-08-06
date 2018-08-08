@@ -27,25 +27,28 @@
 function getCommentersEmailIdsAlt( username ) {
   // get details of user with given username (the API returns an array of users, but we are interested only in the first match)
   get( 'https://jsonplaceholder.typicode.com/users?username=' + username)
-    .then((users) => {
-      console.log(users);
-      var userId = users[0].id;
+    .then(users => {
+      console.log('users:', users);
 
+      var userId = users[0].id;
       return get( 'https://jsonplaceholder.typicode.com/users/' + userId + '/posts');
     })    
-    .then((posts) => {
-      var postId = posts[0].id;
+    .then(posts => {
+      console.log('posts:', posts);
 
+      var postId = posts[0].id;
       return get( 'https://jsonplaceholder.typicode.com/posts/' + postId + '/comments');
     })
-    .then((comments) => {
+    .then(comments => {
+      console.log('comments:', comments);      
+
       var commentersEmailIds = comments.map(function( commenter ) {
         return commenter.email;
       });
       console.log(commentersEmailIds);
     })
-    .catch((error) => {
-      console.log('error:', error);
+    .catch(error => {
+      console.log('Error:', error);
     });
 }
 

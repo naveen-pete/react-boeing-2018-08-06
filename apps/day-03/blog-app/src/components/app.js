@@ -1,6 +1,9 @@
 import React, { Component } from 'react';
+import Nav from './nav';
+import Home from './home';
 import Categories from './categories';
 import Posts from './posts';
+import PostForm from './post-form';
 
 class App extends Component {
   constructor() {
@@ -23,18 +26,13 @@ class App extends Component {
       <div className="container">
         <h1>Blog App</h1>
         <div className="row">
-
-          <div className="col-md-4">
-            <h3>Categories</h3>
-            <Categories selectCategory={this.handleSelectCategory} />
-          </div>
-
-          <div className="col-md-8">
-            <h3>Posts</h3>
-            <h5>(Category: {category})</h5>
-            <Posts category={category} />
-          </div>
-
+          <Nav />
+        </div>
+        <div className="row">
+          <Home />
+          <Categories selectCategory={this.handleSelectCategory} />
+          <Posts category={category} />
+          <PostForm />
         </div>
       </div>
     );
