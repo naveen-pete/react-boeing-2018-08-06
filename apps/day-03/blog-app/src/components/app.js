@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { Route } from 'react-router-dom';
 import Nav from './nav';
 import Home from './home';
 import Categories from './categories';
@@ -28,11 +29,17 @@ class App extends Component {
         <div className="row">
           <Nav />
         </div>
-        <div className="row">
-          <Home />
-          <Categories selectCategory={this.handleSelectCategory} />
-          <Posts category={category} />
-          <PostForm />
+        <div className="row"> 
+          <Route exact path="/posts/new" component={PostForm} />
+          <Route exact path="/posts" render={(props) => {
+            return(
+              <React.Fragment>
+                <Categories {...props} selectCategory={this.handleSelectCategory} />
+                <Posts {...props} category={category} />
+              </React.Fragment>
+            ); 
+          }} />
+          <Route exact path="/" component={Home} />
         </div>
       </div>
     );
@@ -40,3 +47,8 @@ class App extends Component {
 }
 
 export default App;
+
+// http://localhost:3000/  - Home
+// http://localhost:3000/posts  - Posts & Categories
+// http://localhost:3000/posts/new - Post 
+{/*  */}
